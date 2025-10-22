@@ -1,0 +1,50 @@
+association:
+    name: DistanceSpatialBEV
+    kwargs:
+        name_metric: euclidean
+        max_distance: 1.3
+association_reid:
+    name: DistanceCosineAppearance
+    kwargs:
+        use_norm: true
+        num_channels_appearance: 512
+        threshold: 0.85
+bias_fusion_incentive: 0.2
+weight_reid: 0.3
+filter_position:
+    name: Kalman
+    motion_model:
+        name: ConstantAcceleration
+        kwargs:
+            spectral_density_noise: 0.3
+    num_dim_state: 9
+    num_dim_measurement: 3
+    diag_noise_measurement:
+        - [0.1, 0.1, 0.1]
+        - [0.05, 0.05, 0.05]
+    covariance_init: [0.2, 0.2, 0.2, 2.0, 2.0, 2.0, 1.0, 1.0, 1.0]
+filter_size:
+    name: Kalman
+    motion_model:
+        name: ConstantVelocity
+        kwargs:
+            spectral_density_noise: 1.0
+    num_dim_state: 6
+    num_dim_measurement: 3
+    diag_noise_measurement:
+        - [0.3, 0.3, 0.3]
+        - [0.3, 0.3, 0.3]
+    covariance_init: [0.5, 0.5, 0.5, 1.0, 1.0, 1.0]
+filter_orientation:
+    name: Kalman
+    motion_model:
+        name: ConstantVelocity
+        kwargs:
+            spectral_density_noise: 1.0
+    num_dim_state: 4
+    num_dim_measurement: 2
+    diag_noise_measurement:
+        - [0.3, 0.3]
+        - [0.3, 0.3]
+    # TODO: Orientation parametrization
+    covariance_init: [0.5, 0.5, 1.0, 1.0]

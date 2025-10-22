@@ -1,0 +1,5 @@
+# Paths
+path_dir_resources: /home/bertan/colcon_ws/src/ros2_person_tracking/resources
+
+# Seed RNGs
+seed_rngs: 42
